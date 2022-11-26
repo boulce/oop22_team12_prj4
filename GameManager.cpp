@@ -33,3 +33,16 @@ void GameManager::Init() {
 void GameManager::Update() {
 
 }
+
+void GameManager::FPS(clock_t* FPSCurr, clock_t* FPSOld)
+{
+	while (true)
+	{
+		*FPSCurr = clock();
+		if (*FPSCurr - *FPSOld < 66)
+		{
+			*FPSOld = clock();
+			break;
+		}
+	}
+}

@@ -1,4 +1,5 @@
 #include <string>
+#include <time.h>
 using namespace std;
 
 /*
@@ -68,7 +69,8 @@ private:
 class GameManager {
 public:
 	void Init(); // 게임 시작시 초기 정보 설정
-	void Update();
+	void Update(); // 프레임마다 정보 Update
+	void FPS(clock_t* FPSCurr, clock_t* FPSOld); // Frame Per Second 조절
 private:
 	Window window;
 	UI ui;
