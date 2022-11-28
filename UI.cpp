@@ -1,3 +1,4 @@
+#include <iostream>
 #include "gClass.h";
 void gotoXY(int x, int y);
 void setColor(int color);
@@ -7,22 +8,22 @@ void UI::Draw_Main_Box() {
 		for (int j = 0; j < main_box_width; j++) {
 			gotoXY(main_box_x + j, main_box_y + i);
 			if (j == 0 && i == 0) {
-				printf("¦®");
+				cout <<"¦®";
 			}
 			else if (j == main_box_width - 1 && i == 0) {
-				printf("¦¯");
+				cout << "¦¯";
 			}
 			else if (j == 0 && i == main_box_height - 1) {
-				printf("¦±");
+				cout << "¦±";
 			}
 			else if (j == main_box_width - 1 && i == main_box_height - 1) {
-				printf("¦°");
+				cout << "¦°";
 			}
 			else if (i == 0 || i == main_box_height - 1) {
-				printf("¦¬");
+				cout << "¦¬";
 			}
 			else if (j == 0 || j == main_box_width - 1) {
-				printf("¦­");
+				cout << "¦­";
 			}
 		}
 	}

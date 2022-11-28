@@ -1,5 +1,6 @@
 #include <string>
 #include <time.h>
+#include <vector>
 using namespace std;
 
 /*
@@ -21,6 +22,8 @@ class UI {
 public:
 
 	int get_main_box_width() { return main_box_width; }
+	int get_main_box_x() { return main_box_x; }
+	int get_main_box_y() { return main_box_y; }
 
 	void set_main_box_width(int w) { main_box_width = w; }
 	void set_main_box_height(int h) { main_box_height = h; }
@@ -66,6 +69,36 @@ private:
 	int height; // 콘솔창 크기
 };
 
+class Word {
+public:
+	string get_name() { return name; }
+	int get_x(){ return x; }
+	int get_y() { return y; }
+	int get_speed() { return speed; }
+
+	void set_x(int x) { this->x = x; }
+	void set_y(int y) { this->y = y; }
+	void set_speed(int s) { speed = s; }
+	void Word_Draw(int main_box_x, int main_box_y);
+	void Word_Erase(int main_box_x, int main_box_y);
+	Word(string name, int x, int y, int s);
+
+private:
+	string name;
+	int x;
+	int y;
+	int speed;
+};
+
+class WordManager {
+public:
+	vector<Word>& get_current_word_list() { return current_word_list;  }
+
+private:
+	vector<Word> dictionary;
+	vector<Word> current_word_list;
+};
+
 class GameManager {
 public:
 	void Init(); // 게임 시작시 초기 정보 설정
@@ -74,4 +107,5 @@ public:
 private:
 	Window window;
 	UI ui;
+	WordManager word_manager;
 };
