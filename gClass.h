@@ -1,5 +1,4 @@
 #include <string>
-//#include <time.h>
 #include <vector>
 using namespace std;
 
@@ -22,9 +21,10 @@ class UI {
 public:
 	UI();
 
-	//int get_main_box_width() { return main_box_width; }
+	int get_main_box_width() { return main_box_width; }
 	int get_main_box_x() { return main_box_x; }
 	int get_main_box_y() { return main_box_y; }
+	int get_game_over_line_y() { return game_over_line_y; }
 
 	//void set_main_box_width(int w) { main_box_width = w; }
 	//void set_main_box_height(int h) { main_box_height = h; }
@@ -44,7 +44,7 @@ public:
 private:
 	string window_title; // 콘솔창 제목
 	int window_width; // 콘솔창 너비
-	int window_height; // 콘솔창 크기
+	int window_height; // 콘솔창 높이
 
 	int main_box_width; // 메인 게임 공간 너비
 	int main_box_height; // 메인 게임 공간 높이
@@ -56,12 +56,13 @@ private:
 	int typing_box_x; // 타이핑 공간의 메인 게임 공간 왼쪽에서 시작 X좌표
 	int typing_box_y; // 타이핑 공간의 메인 게임 공간 아래쪽에서 시작 Y좌표
 
+	int game_over_line_y; // 단어가 닿으면 게임이 끝나는 y좌표
 };
 
 
 class Word {
 public:
-	Word(string name, int x, int y, int s);
+	Word(string name, int x = 0, int y = 0, int s = 0);
 
 	string get_name() { return name; }
 	int get_x(){ return x; }
@@ -82,22 +83,25 @@ private:
 	int speed;
 };
 
+#include <iostream>
 class WordManager {
 public:
-	vector<Word>& get_current_word_list() { return current_word_list;  }
+	WordManager();
+
+	vector<Word>& get_falling_word_list() { return falling_word_list; }
+	void add_falling_word(int main_box_width); // 이 메소드를 실행하면 랜덤단어 하나만 가져와서 falling_word_list에 추가됨
 
 private:
-	vector<Word> dictionary;
-	vector<Word> current_word_list;
+	vector<string> load_word_list;
+	vector<Word> falling_word_list;
 };
 
 class GameManager {
 public:
 	void Init(); // 게임 시작시 초기 정보 설정
 	void Update(); // 프레임마다 정보 Update
-	void FPS(/*clock_t* FPSCurr, clock_t* FPSOld*/); // Frame Per Second 조절
+	void FPS(); // Frame Per Second 조절
 private:
-	//Window window;
 	UI ui;
 	WordManager word_manager;
 };

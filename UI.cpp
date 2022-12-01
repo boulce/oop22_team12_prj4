@@ -45,6 +45,9 @@ UI::UI() {
 	typing_box_x = (main_box_width - typing_box_width) / 2; // Typing_Box가 Main_Box의 중간에 오도록 한다
 	typing_box_y = 18;
 	Draw_Typing_Box();
+
+	// 게임 오버 라인 y좌표 설정
+	game_over_line_y = typing_box_y - 1; // Typing_Box 바로 위로 설정
 }
 
 void UI::Draw_Main_Box() {
