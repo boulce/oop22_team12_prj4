@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <time.h>
 using namespace std;
 
 /*
@@ -62,12 +63,19 @@ private:
 
 class Word {
 public:
-	Word(string name, int x = 0, int y = 0, int s = 0);
+	Word(string name, int x = 0, int y = 0, int s = 0, clock_t update_time_interval = 0);
 
 	string get_name() { return name; }
 	int get_x(){ return x; }
 	int get_y() { return y; }
 	int get_speed() { return speed; }
+
+	clock_t get_last_update_time() { return last_update_time; }
+	clock_t get_update_time_interval() { return update_time_interval; }
+
+	void set_last_update_time(clock_t t) { last_update_time = t; }
+	void set_update_time_interval(clock_t t) { update_time_interval = t; }
+	
 
 	void set_x(int x) { this->x = x; }
 	void set_y(int y) { this->y = y; }
@@ -81,6 +89,8 @@ private:
 	int x;
 	int y;
 	int speed;
+	clock_t last_update_time; // 단어가 마지막으로 업데이트된 시각
+	clock_t update_time_interval; // 단어 업데이트된 시간 간격
 };
 
 #include <iostream>
@@ -89,11 +99,19 @@ public:
 	WordManager();
 
 	vector<Word>& get_falling_word_list() { return falling_word_list; }
+	clock_t get_last_word_birth_time() { return last_word_birth_time; }
+	clock_t get_birth_time_interval() { return birth_time_interval; }
+
+	void set_last_word_birth_time(clock_t t) { last_word_birth_time = t; }
 	void add_falling_word(int main_box_width); // 이 메소드를 실행하면 랜덤단어 하나만 가져와서 falling_word_list에 추가됨
+
 
 private:
 	vector<string> load_word_list;
 	vector<Word> falling_word_list;
+
+	clock_t last_word_birth_time; // 단어가 마지막으로 생성된 시각
+	clock_t birth_time_interval; // 단어 생성 시간 간격
 };
 
 class GameManager {
@@ -104,4 +122,5 @@ public:
 private:
 	UI ui;
 	WordManager word_manager;
+	clock_t system_time; // 게임 시작하고 경과된 시간
 };
