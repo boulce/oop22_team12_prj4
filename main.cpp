@@ -2,13 +2,13 @@
 
 int main() {
 	GameManager gManager;
-	clock_t FPSCurr, FPSOld;
+	//clock_t FPSCurr, FPSOld;
 
-	FPSOld = clock();
+	//FPSOld = clock();
 
 	gManager.Init();
 	while (true) {
 		gManager.Update();
-		gManager.FPS(&FPSCurr, &FPSOld); // Frame Per Second 조절
+		gManager.FPS(/*&FPSCurr, &FPSOld*/); // Frame Per Second 조절
 	}
 }

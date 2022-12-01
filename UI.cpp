@@ -1,7 +1,51 @@
-#include <iostream>
 #include "gClass.h";
+#include <iostream>
+#include <windows.h>
 void gotoXY(int x, int y);
 void setColor(int color);
+
+UI::UI() {
+
+	/*
+		콘솔창 정보 설정
+	*/
+	string temp;
+
+	window_title = "OOP22 TEAM12 PROJECT4";
+	window_width = 100;
+	window_height = 30;
+
+	temp = "title " + window_title;
+	system(temp.c_str()); // 제목 설정
+
+	temp = "mode concols=" + to_string(window_width) + " lines=" + to_string(window_height);
+	system(temp.c_str()); // 크기 설정
+
+	// 커서 깜빡거림 제거
+	CONSOLE_CURSOR_INFO curInfo;
+	GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
+	curInfo.bVisible = 0;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
+
+	/*
+		게임 내 UI 정보 설정
+	*/
+
+
+	// Main_Box 설정
+	main_box_width = 80;
+	main_box_height = 25;
+	main_box_x = (window_width - main_box_width) / 2; // Main_Box가 Window의 중간에 오도록 한다
+	main_box_y = 1;
+	Draw_Main_Box();
+
+	// Typing_Box 설정
+	typing_box_width = 26 ;
+	typing_box_height = 5;
+	typing_box_x = (main_box_width - typing_box_width) / 2; // Typing_Box가 Main_Box의 중간에 오도록 한다
+	typing_box_y = 18;
+	Draw_Typing_Box();
+}
 
 void UI::Draw_Main_Box() {
 	for (int i = 0; i < main_box_height; i++) {
