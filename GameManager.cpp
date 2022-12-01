@@ -11,11 +11,12 @@ void GameManager::Init() {
 void gotoXY(int, int);
 void GameManager::Update() {
 	vector<Word>& falling_word_list = word_manager.get_falling_word_list();
-
 	system_time = clock(); // 시스템 시간 갱신
 
+	ui.keyboardEvent(falling_word_list);
 	for (int i = 0; i < falling_word_list.size(); i++) {
-		if (system_time - falling_word_list[i].get_last_update_time() >= falling_word_list[i].get_update_time_interval()) {
+		if (system_time - falling_word_list[i].get_last_update_time() >= falling_word_list[i].get_update_time_interval()) 
+		{
 			falling_word_list[i].Word_Erase(ui.get_main_box_x(), ui.get_main_box_y());
 			// 단어가 게임 오버 라인에 닿으면 사라진다
 			if (falling_word_list[i].get_y() >= ui.get_game_over_line_y()) {

@@ -1,6 +1,8 @@
 #include "gClass.h";
 #include <iostream>
 #include <windows.h>
+#include <conio.h>
+
 void gotoXY(int x, int y);
 void setColor(int color);
 
@@ -41,9 +43,9 @@ UI::UI() {
 
 	// Typing_Box 설정
 	typing_box_width = 26 ;
-	typing_box_height = 5;
+	typing_box_height = 3;
 	typing_box_x = (main_box_width - typing_box_width) / 2; // Typing_Box가 Main_Box의 중간에 오도록 한다
-	typing_box_y = 18;
+	typing_box_y = 21;
 	Draw_Typing_Box();
 
 	// 게임 오버 라인 y좌표 설정
@@ -97,6 +99,47 @@ void UI::Draw_Typing_Box() {
 			}
 			else if (j == 0 || j == typing_box_width - 1) {
 				printf("┃");
+			}
+		}
+	}
+}
+
+
+void UI::keyboardEvent(vector<Word>& falling_word_list) {
+	char c;
+	if (_kbhit()) {
+		c = _getch();
+
+		if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' || c == ' - ') {
+			if (typing_str.size() <= typing_box_width - 4) {
+				typing_str += c;
+				gotoXY(main_box_x + typing_box_x + 2, main_box_y + typing_box_y + 1);
+				cout << typing_str;
+			}
+		}
+
+		if (c == 8) { // 백스페이스
+			if (typing_str.size()) {
+				gotoXY(main_box_x + typing_box_x + 2 + typing_str.size() - 1, main_box_y + typing_box_y + 1);
+				cout << " ";
+				typing_str.pop_back();
+			}
+		}
+
+		if (c == 13) { // 엔터
+			if (typing_str.size()) {	
+				for (vector<Word>::iterator it = falling_word_list.begin(); it != falling_word_list.end(); it++) {
+					if (it->get_name() == typing_str) { // 일치하는 글자가 있으면 지운다.
+						it->Word_Erase(main_box_x, main_box_y);
+						falling_word_list.erase(it);
+
+						gotoXY(main_box_x + typing_box_x + 2, main_box_y + typing_box_y + 1);
+						for (int i = 0; i < typing_str.size(); i++) cout << " "; // Typing_Box 안의 글자 비움
+
+						typing_str.clear();
+						break;
+					}
+				}
 			}
 		}
 	}

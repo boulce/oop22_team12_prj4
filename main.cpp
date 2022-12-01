@@ -1,4 +1,5 @@
 #include "gClass.h";
+#include <iostream>
 
 void gotoXY(int x, int y);
 

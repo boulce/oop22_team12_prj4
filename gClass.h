@@ -18,6 +18,61 @@ using namespace std;
 #define DARK_YELLOW 6
 #define DARK_BLUE 1
 
+
+class Word {
+public:
+	Word(string name, int x = 0, int y = 0, int s = 0, clock_t update_time_interval = 0);
+
+	string get_name() { return name; }
+	int get_x() { return x; }
+	int get_y() { return y; }
+	int get_speed() { return speed; }
+
+	clock_t get_last_update_time() { return last_update_time; }
+	clock_t get_update_time_interval() { return update_time_interval; }
+
+	void set_last_update_time(clock_t t) { last_update_time = t; }
+	void set_update_time_interval(clock_t t) { update_time_interval = t; }
+
+
+	void set_x(int x) { this->x = x; }
+	void set_y(int y) { this->y = y; }
+	void set_speed(int s) { speed = s; }
+
+	void Word_Draw(int main_box_x, int main_box_y);
+	void Word_Erase(int main_box_x, int main_box_y);
+
+private:
+	string name;
+	int x;
+	int y;
+	int speed;
+	clock_t last_update_time; // 단어가 마지막으로 업데이트된 시각
+	clock_t update_time_interval; // 단어 업데이트된 시간 간격
+};
+
+class WordManager {
+public:
+	WordManager();
+
+	vector<Word>& get_falling_word_list() { return falling_word_list; }
+	clock_t get_last_word_birth_time() { return last_word_birth_time; }
+	clock_t get_birth_time_interval() { return birth_time_interval; }
+
+	void set_last_word_birth_time(clock_t t) { last_word_birth_time = t; }
+	void set_birth_time_interval(clock_t t) { birth_time_interval = t; }
+	void add_falling_word(int main_box_width); // 이 메소드를 실행하면 랜덤단어 하나만 가져와서 falling_word_list에 추가됨
+
+
+private:
+	vector<string> load_word_list;
+	vector<Word> falling_word_list;
+	int total_word_cnt;
+
+	clock_t last_word_birth_time; // 단어가 마지막으로 생성된 시각
+	clock_t birth_time_interval; // 단어 생성 시간 간격
+};
+
 class UI {
 public:
 	UI();
@@ -42,6 +97,8 @@ public:
 	void Draw_Main_Box();
 	void Draw_Typing_Box();
 
+	void keyboardEvent(vector<Word>& falling_word_list);
+
 private:
 	string window_title; // 콘솔창 제목
 	int window_width; // 콘솔창 너비
@@ -58,60 +115,8 @@ private:
 	int typing_box_y; // 타이핑 공간의 메인 게임 공간 아래쪽에서 시작 Y좌표
 
 	int game_over_line_y; // 단어가 닿으면 게임이 끝나는 y좌표
-};
 
-
-class Word {
-public:
-	Word(string name, int x = 0, int y = 0, int s = 0, clock_t update_time_interval = 0);
-
-	string get_name() { return name; }
-	int get_x(){ return x; }
-	int get_y() { return y; }
-	int get_speed() { return speed; }
-
-	clock_t get_last_update_time() { return last_update_time; }
-	clock_t get_update_time_interval() { return update_time_interval; }
-
-	void set_last_update_time(clock_t t) { last_update_time = t; }
-	void set_update_time_interval(clock_t t) { update_time_interval = t; }
-	
-
-	void set_x(int x) { this->x = x; }
-	void set_y(int y) { this->y = y; }
-	void set_speed(int s) { speed = s; }
-
-	void Word_Draw(int main_box_x, int main_box_y);
-	void Word_Erase(int main_box_x, int main_box_y);
-
-private:
-	string name;
-	int x;
-	int y;
-	int speed;
-	clock_t last_update_time; // 단어가 마지막으로 업데이트된 시각
-	clock_t update_time_interval; // 단어 업데이트된 시간 간격
-};
-
-#include <iostream>
-class WordManager {
-public:
-	WordManager();
-
-	vector<Word>& get_falling_word_list() { return falling_word_list; }
-	clock_t get_last_word_birth_time() { return last_word_birth_time; }
-	clock_t get_birth_time_interval() { return birth_time_interval; }
-
-	void set_last_word_birth_time(clock_t t) { last_word_birth_time = t; }
-	void add_falling_word(int main_box_width); // 이 메소드를 실행하면 랜덤단어 하나만 가져와서 falling_word_list에 추가됨
-
-
-private:
-	vector<string> load_word_list;
-	vector<Word> falling_word_list;
-
-	clock_t last_word_birth_time; // 단어가 마지막으로 생성된 시각
-	clock_t birth_time_interval; // 단어 생성 시간 간격
+	string typing_str; // 현재 입력한 문자열
 };
 
 class GameManager {
