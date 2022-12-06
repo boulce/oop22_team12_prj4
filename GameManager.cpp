@@ -1,39 +1,41 @@
-#include "gClass.h";
+ï»¿#include "gClass.h"
 #include <iostream>
 
 void GameManager::Init() {
-	word_manager.add_falling_word(ui.get_main_box_width()); // ·£´ıÀ¸·Î ´Ü¾î Ãß°¡
+	word_manager.add_falling_word(ui.get_main_box_width()); // ëœë¤ìœ¼ë¡œ ë‹¨ì–´ ì¶”ê°€
 
 	vector<Word>& falling_word_list = word_manager.get_falling_word_list();
-	falling_word_list[0].Word_Draw(ui.get_main_box_x(), ui.get_main_box_y()); // Ã³À½ »ı¼ºµÈ ´Ü¾î ±×¸®±â
+	falling_word_list[0].Word_Draw(ui.get_main_box_x(), ui.get_main_box_y()); // ì²˜ìŒ ìƒì„±ëœ ë‹¨ì–´ ê·¸ë¦¬ê¸°
+	
 }
 
 void gotoXY(int, int);
 void GameManager::Update() {
 	vector<Word>& falling_word_list = word_manager.get_falling_word_list();
-	system_time = clock(); // ½Ã½ºÅÛ ½Ã°£ °»½Å
+	system_time = clock(); // ì‹œìŠ¤í…œ ì‹œê°„ ê°±ì‹ 
 
 	ui.keyboardEvent(falling_word_list);
 	for (int i = 0; i < falling_word_list.size(); i++) {
 		if (system_time - falling_word_list[i].get_last_update_time() >= falling_word_list[i].get_update_time_interval()) 
 		{
 			falling_word_list[i].Word_Erase(ui.get_main_box_x(), ui.get_main_box_y());
-			// ´Ü¾î°¡ °ÔÀÓ ¿À¹ö ¶óÀÎ¿¡ ´êÀ¸¸é »ç¶óÁø´Ù
+			// ë‹¨ì–´ê°€ ê²Œì„ ì˜¤ë²„ ë¼ì¸ì— ë‹¿ìœ¼ë©´ ì‚¬ë¼ì§„ë‹¤
 			if (falling_word_list[i].get_y() >= ui.get_game_over_line_y()) {
 				falling_word_list.erase(falling_word_list.begin() + i);
 				i--;
+				ui.down_life(); //lifeë¥¼ ê¹ëŠ”ë‹¤
 				continue;
 			}
 			falling_word_list[i].set_y(falling_word_list[i].get_y() + falling_word_list[i].get_speed());
 			falling_word_list[i].set_last_update_time(system_time);
 			falling_word_list[i].Word_Draw(ui.get_main_box_x(), ui.get_main_box_y());
-		} // °¢°¢ÀÇ ´Ü¾î°¡ ÀÚ½ÅÀÇ update_time_interval ÈÄ¿¡ ÁÂÇ¥°¡ °»½ÅµÈ´Ù
+		} // ê°ê°ì˜ ë‹¨ì–´ê°€ ìì‹ ì˜ update_time_interval í›„ì— ì¢Œí‘œê°€ ê°±ì‹ ëœë‹¤
 	}
 	if (system_time - word_manager.get_last_word_birth_time() >= word_manager.get_birth_time_interval()) {
-		word_manager.add_falling_word(ui.get_main_box_width()); // ·£´ıÀ¸·Î ´Ü¾î Ãß°¡
-		falling_word_list[falling_word_list.size() - 1].Word_Draw(ui.get_main_box_x(), ui.get_main_box_y()); // Ã³À½ »ı¼ºµÈ ´Ü¾î ±×¸®±â
+		word_manager.add_falling_word(ui.get_main_box_width()); // ëœë¤ìœ¼ë¡œ ë‹¨ì–´ ì¶”ê°€
+		falling_word_list[falling_word_list.size() - 1].Word_Draw(ui.get_main_box_x(), ui.get_main_box_y()); // ì²˜ìŒ ìƒì„±ëœ ë‹¨ì–´ ê·¸ë¦¬ê¸°
 		word_manager.set_last_word_birth_time(system_time);
-	}	// birth_time_interval ÈÄ¿¡ ´Ü¾î°¡ »ı¼ºµÈ´Ù
+	}	// birth_time_interval í›„ì— ë‹¨ì–´ê°€ ìƒì„±ëœë‹¤
 }
 
 void GameManager::FPS()
@@ -51,3 +53,5 @@ void GameManager::FPS()
 		}
 	}
 }
+
+
