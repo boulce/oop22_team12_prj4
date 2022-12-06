@@ -1,4 +1,4 @@
-#include "gClass.h";
+ï»¿#include "gClass.h";
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
@@ -9,7 +9,7 @@ void setColor(int color);
 UI::UI() {
 
 	/*
-		ÄÜ¼ÖÃ¢ Á¤º¸ ¼³Á¤
+		ì½˜ì†”ì°½ ì •ë³´ ì„¤ì •
 	*/
 	string temp;
 
@@ -18,38 +18,41 @@ UI::UI() {
 	window_height = 30;
 
 	temp = "title " + window_title;
-	system(temp.c_str()); // Á¦¸ñ ¼³Á¤
+	system(temp.c_str()); // ì œëª© ì„¤ì •
 
 	temp = "mode concols=" + to_string(window_width) + " lines=" + to_string(window_height);
-	system(temp.c_str()); // Å©±â ¼³Á¤
+	system(temp.c_str()); // í¬ê¸° ì„¤ì •
 
-	// Ä¿¼­ ±ôºı°Å¸² Á¦°Å
+	// ì»¤ì„œ ê¹œë¹¡ê±°ë¦¼ ì œê±°
 	CONSOLE_CURSOR_INFO curInfo;
 	GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
 	curInfo.bVisible = 0;
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
 
 	/*
-		°ÔÀÓ ³» UI Á¤º¸ ¼³Á¤
+		ê²Œì„ ë‚´ UI ì •ë³´ ì„¤ì •
 	*/
 
 
-	// Main_Box ¼³Á¤
+	// Main_Box ì„¤ì •
 	main_box_width = 80;
 	main_box_height = 25;
-	main_box_x = (window_width - main_box_width) / 2; // Main_Box°¡ WindowÀÇ Áß°£¿¡ ¿Àµµ·Ï ÇÑ´Ù
+	main_box_x = (window_width - main_box_width) / 2; // Main_Boxê°€ Windowì˜ ì¤‘ê°„ì— ì˜¤ë„ë¡ í•œë‹¤
 	main_box_y = 1;
 	Draw_Main_Box();
 
-	// Typing_Box ¼³Á¤
+	// Typing_Box ì„¤ì •
 	typing_box_width = 26 ;
 	typing_box_height = 3;
-	typing_box_x = (main_box_width - typing_box_width) / 2; // Typing_Box°¡ Main_BoxÀÇ Áß°£¿¡ ¿Àµµ·Ï ÇÑ´Ù
+	typing_box_x = (main_box_width - typing_box_width) / 2; // Typing_Boxê°€ Main_Boxì˜ ì¤‘ê°„ì— ì˜¤ë„ë¡ í•œë‹¤
 	typing_box_y = 21;
 	Draw_Typing_Box();
 
-	// °ÔÀÓ ¿À¹ö ¶óÀÎ yÁÂÇ¥ ¼³Á¤
-	game_over_line_y = typing_box_y - 1; // Typing_Box ¹Ù·Î À§·Î ¼³Á¤
+	// ê²Œì„ ì˜¤ë²„ ë¼ì¸ yì¢Œí‘œ ì„¤ì •
+	game_over_line_y = typing_box_y - 1; // Typing_Box ë°”ë¡œ ìœ„ë¡œ ì„¤ì •
+
+	score = 0; //ì²˜ìŒ ì ìˆ˜ ì„¤ì •
+	life = 5; //ì²˜ìŒ ë¼ì´í”„ ì„¤ì •
 }
 
 void UI::Draw_Main_Box() {
@@ -57,22 +60,22 @@ void UI::Draw_Main_Box() {
 		for (int j = 0; j < main_box_width; j++) {
 			gotoXY(main_box_x + j, main_box_y + i);
 			if (j == 0 && i == 0) {
-				cout <<"¦®";
+				cout <<"â”";
 			}
 			else if (j == main_box_width - 1 && i == 0) {
-				cout << "¦¯";
+				cout << "â”“";
 			}
 			else if (j == 0 && i == main_box_height - 1) {
-				cout << "¦±";
+				cout << "â”—";
 			}
 			else if (j == main_box_width - 1 && i == main_box_height - 1) {
-				cout << "¦°";
+				cout << "â”›";
 			}
 			else if (i == 0 || i == main_box_height - 1) {
-				cout << "¦¬";
+				cout << "â”";
 			}
 			else if (j == 0 || j == main_box_width - 1) {
-				cout << "¦­";
+				cout << "â”ƒ";
 			}
 		}
 	}
@@ -83,22 +86,22 @@ void UI::Draw_Typing_Box() {
 		for (int j = 0; j < typing_box_width; j++) {
 			gotoXY(main_box_x + typing_box_x + j, main_box_y + typing_box_y + i);
 			if (j == 0 && i == 0) {
-				printf("¦®");
+				printf("â”");
 			}
 			else if (j == typing_box_width - 1 && i == 0) {
-				printf("¦¯");
+				printf("â”“");
 			}
 			else if (j == 0 && i == typing_box_height - 1) {
-				printf("¦±");
+				printf("â”—");
 			}
 			else if (j == typing_box_width - 1 && i == typing_box_height - 1) {
-				printf("¦°");
+				printf("â”›");
 			}
 			else if (i == 0 || i == typing_box_height - 1) {
-				printf("¦¬");
+				printf("â”");
 			}
 			else if (j == 0 || j == typing_box_width - 1) {
-				printf("¦­");
+				printf("â”ƒ");
 			}
 		}
 	}
@@ -118,7 +121,7 @@ void UI::keyboardEvent(vector<Word>& falling_word_list) {
 			}
 		}
 
-		if (c == 8) { // ¹é½ºÆäÀÌ½º
+		if (c == 8) { // ë°±ìŠ¤í˜ì´ìŠ¤
 			if (typing_str.size()) {
 				gotoXY(main_box_x + typing_box_x + 2 + typing_str.size() - 1, main_box_y + typing_box_y + 1);
 				cout << " ";
@@ -126,15 +129,15 @@ void UI::keyboardEvent(vector<Word>& falling_word_list) {
 			}
 		}
 
-		if (c == 13) { // ¿£ÅÍ
+		if (c == 13) { // ì—”í„°
 			if (typing_str.size()) {	
 				for (vector<Word>::iterator it = falling_word_list.begin(); it != falling_word_list.end(); it++) {
-					if (it->get_name() == typing_str) { // ÀÏÄ¡ÇÏ´Â ±ÛÀÚ°¡ ÀÖÀ¸¸é Áö¿î´Ù.
+					if (it->get_name() == typing_str) { // ì¼ì¹˜í•˜ëŠ” ê¸€ìê°€ ìˆìœ¼ë©´ ì§€ìš´ë‹¤.
 						it->Word_Erase(main_box_x, main_box_y);
 						falling_word_list.erase(it);
-
+						score++;//ì¡°ê±´ ë‹¬ì„±ì‹œ ì ìˆ˜ ì¶”ê°€
 						gotoXY(main_box_x + typing_box_x + 2, main_box_y + typing_box_y + 1);
-						for (int i = 0; i < typing_str.size(); i++) cout << " "; // Typing_Box ¾ÈÀÇ ±ÛÀÚ ºñ¿ò
+						for (int i = 0; i < typing_str.size(); i++) cout << " "; // Typing_Box ì•ˆì˜ ê¸€ì ë¹„ì›€
 
 						typing_str.clear();
 						break;
@@ -143,4 +146,10 @@ void UI::keyboardEvent(vector<Word>& falling_word_list) {
 			}
 		}
 	}
+}
+
+void UI::down_life()
+{
+	life--;
+
 }

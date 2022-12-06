@@ -1,4 +1,4 @@
-#include "gClass.h";
+ï»¿#include "gClass.h";
 #include <iostream>
 
 void gotoXY(int x, int y);
@@ -9,28 +9,40 @@ int main() {
 	gManager.Init();
 
 	/*
-			Å×½ºÆ®¿ë FPS °è»ê¿¡ ¾²ÀÌ´Â º¯¼ö
+			í…ŒìŠ¤íŠ¸ìš© FPS ê³„ì‚°ì— ì“°ì´ëŠ” ë³€ìˆ˜
 	*/
 	clock_t tempcur;
 	clock_t tempold = clock();
 	int FrameCnt = 0;
+	int exit_flag = 1; //í”„ë¡œê·¸ëž¨ ì¢…ë£Œ íŒì •
 
-	while (true) {
+	while (exit_flag) {
 
 		/*
-			Å×½ºÆ®¿ë FPS °è»ê
-			Âü°í: https://huiyu.tistory.com/entry/C%EC%96%B8%EC%96%B4%EB%A1%9C-%EA%B2%8C%EC%9E%84%EB%A7%8C%EB%93%A4%EA%B8%B0-3-%EB%A0%8C%EB%8D%94%EB%A7%81-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84
+			í…ŒìŠ¤íŠ¸ìš© FPS ê³„ì‚°
+			ì°¸ê³ : https://huiyu.tistory.com/entry/C%EC%96%B8%EC%96%B4%EB%A1%9C-%EA%B2%8C%EC%9E%84%EB%A7%8C%EB%93%A4%EA%B8%B0-3-%EB%A0%8C%EB%8D%94%EB%A7%81-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84
 		*/
 		FrameCnt++;
 		tempcur = clock();
 		if (tempcur - tempold >= 1000)
 		{
-			gotoXY(0, 0);
+			gotoXY(3, 0);
 			cout << "FPS: " << FrameCnt;
+			gotoXY(3, 26);
+			cout << "score: " <<gManager.Score() ;
+			gotoXY(20, 26);
+			cout << "Life: " << gManager.Life();
+
 			tempold = clock();
 			FrameCnt = 0;
 		}
-		gManager.FPS(); // Frame Per Second Á¶Àý
+		gManager.FPS(); // Frame Per Second ì¡°ì ˆ
 		gManager.Update();
+
+		if (gManager.Life() == 0) {
+			exit_flag = 0;
+		}
 	}
+
+	cout << "í”„ë¡œê·¸ëž¨ ì¢…ë£Œ";
 }
