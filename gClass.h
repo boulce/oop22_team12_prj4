@@ -1,32 +1,49 @@
-﻿#include <string>
+#include <string>
 #include <vector>
 #include <time.h>
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+#include <fstream>
+#include <random>
+
 using namespace std;
 
 /*
-   색깔 값, setColor(int color) 함수의 인자로 사용된다.
+   색깔 값, cursor_function::setColor(int color) 함수의 인자로 사용된다.
 */
-#define RED 4 
-#define ORANGE 12
-#define YELLOW 14
-#define GREEN 10
-#define CYAN 11
-#define BLUE 9
-#define PURPLE 13
-#define WHITE 15
-#define GRAY 8
-#define DARK_YELLOW 6
-#define DARK_BLUE 1
 
+
+enum Color {
+	DARK_BLUE = 1,
+	RED = 4,
+	DARK_YELLOW = 6,
+	GRAY = 8,
+	BLUE = 9,
+	GREEN = 10,
+	CYAN=11,
+	ORANGE=12,
+	PURPLE=13,
+	YELLOW=14,
+	WHITE=15
+
+};
+
+
+
+
+void gotoXY(int, int); //cursor_function::gotoXY
+void setColor(int); //cursor_function::setColor
 
 class Word {
 public:
-	Word(string name, int x = 0, int y = 0, int s = 0, clock_t update_time_interval = 0);
+	Word(string name, int x = 0, int y = 0, int s = 0, clock_t update_time_interval = 0, Color word_color=WHITE);
 
 	string get_name() { return name; }
 	int get_x() { return x; }
 	int get_y() { return y; }
 	int get_speed() { return speed; }
+	Color get_color() { return word_color; }
 
 	clock_t get_last_update_time() { return last_update_time; }
 	clock_t get_update_time_interval() { return update_time_interval; }
@@ -49,6 +66,7 @@ private:
 	int speed;
 	clock_t last_update_time; // 단어가 마지막으로 업데이트된 시각
 	clock_t update_time_interval; // 단어 업데이트된 시간 간격
+	Color word_color; //단어의 색
 };
 
 class WordManager {
@@ -103,7 +121,7 @@ public:
 
 	void keyboardEvent(vector<Word>& falling_word_list);
 
-	void down_life(); //라이프를 깎는다. setter보다 이렇게 하는게 나은듯 만약 아이템같은걸 추가해서 특정 단어 맞출시 life 3개 추가 이런거 할거면 setter로 바꿔야 할듯
+	void down_life(int num); //라이프를 깎는다. setter보다 이렇게 하는게 나은듯 만약 아이템같은걸 추가해서 특정 단어 맞출시 life 3개 추가 이런거 할거면 setter로 바꿔야 할듯
 
 private:
 	string window_title; // 콘솔창 제목
@@ -134,6 +152,7 @@ public:
 	void FPS(); // Frame Per Second 조절
 	int Score() { return ui.get_score(); }//점수를 UI에서 가져옴 score를 GameManager에 넣지 않는 이유는 score를 +하는 조건이 UI에 있기때문, 그냥 넣으면 GameManager의 public에 getter/setter설정 필요할듯 그러면 더러워짐
 	int Life() { return ui.get_life(); } //생명을 UI에서 가져온다. life를 Score처럼 UI에 넣는 이유는 score와 life는 유사한데 다른 클래스에 있으면 어색하기 때문, 
+	void is_exit(); //프로그램 종료 판정
 private:
 	UI ui;
 	WordManager word_manager;

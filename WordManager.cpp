@@ -1,6 +1,5 @@
 #include "gClass.h"
-#include <fstream>
-#include <random>
+
 
 WordManager::WordManager() {
 	ifstream input_stream;
@@ -8,7 +7,7 @@ WordManager::WordManager() {
 	if (input_stream.fail()) {
 		return;
 	}
-	char temp[100]; //Àû´çÈ÷ Å« ¼ıÀÚ, ÆÄÀÏ¿¡¼­ ÇÑÁÙ¾¿ ¹Ş¾Æ¿Ã¶§ ÀÓ½Ã·Î »ç¿ë
+	char temp[100]; //ì ë‹¹íˆ í° ìˆ«ì, íŒŒì¼ì—ì„œ í•œì¤„ì”© ë°›ì•„ì˜¬ë•Œ ì„ì‹œë¡œ ì‚¬ìš©
 	total_word_cnt = 0;
 	while (input_stream.getline(temp, 100)) {
 		load_word_list.push_back(string(temp));
@@ -21,22 +20,29 @@ WordManager::WordManager() {
 	birth_time_interval = (clock_t)2000;
 }
 
-void WordManager::add_falling_word(int main_box_width) { // ÀÌ ¸Ş¼Òµå¸¦ ½ÇÇàÇÏ¸é ·£´ı´Ü¾î ÇÏ³ª¸¸ °¡Á®¿Í¼­ falling_word_list¿¡ Ãß°¡µÊ
+void WordManager::add_falling_word(int main_box_width) { // ì´ ë©”ì†Œë“œë¥¼ ì‹¤í–‰í•˜ë©´ ëœë¤ë‹¨ì–´ í•˜ë‚˜ë§Œ ê°€ì ¸ì™€ì„œ falling_word_listì— ì¶”ê°€ë¨
 	random_device  rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<int> dis_word(0, total_word_cnt - 1);
 	string selected_word = load_word_list[dis_word(gen)];
 
-	uniform_int_distribution<int> dis_x(1, main_box_width - (int)selected_word.size() - 1); // ´Ü¾îÀÇ ·£´ı xÁÂÇ¥¸¦ Á¤ÇÑ´Ù. Main Box ¹ÛÀ¸·Î ³ª°¡Áö¾Ê°Ô Á¤ÇÑ´Ù.
+	uniform_int_distribution<int> dis_x(1, main_box_width - (int)selected_word.size() - 1); // ë‹¨ì–´ì˜ ëœë¤ xì¢Œí‘œë¥¼ ì •í•œë‹¤. Main Box ë°–ìœ¼ë¡œ ë‚˜ê°€ì§€ì•Šê²Œ ì •í•œë‹¤.
 	int selected_x = dis_x(gen);
 
-	uniform_int_distribution<clock_t> dis_update_interval(500, 500); // ´Ü¾î ¾÷µ¥ÀÌÆ® ½Ã°£ °£°İÀ» ·£´ıÀ¸·Î Á¤ÇÑ´Ù.
-																	   // ±×·¯³ª °¢ ´Ü¾îÀÇ ¼Óµµ°¡ ´Ù¸£¸é ´Ü¾î°¡ °ãÄ¡´Â ¹®Á¦°¡ »ı±â°í
-																	   // ³ªÁß¿¡ ¸¸µé¾îÁ³´ø °°Àº ÀÌ¸§ÀÇ ´Ü¾î°¡ ¸ÕÀú ¸¸µé¾îÁö´Â °°Àº ÀÌ¸§ÀÇ
-																	   // ´Ü¾îµéÀ» Ãß¿ù ÇßÀ» ¶§ ´õ ¹Ø¿¡ ÀÖ´Â ´Ü¾î ¾ø¾Öµµ·Ï ±¸ÇöÇØ¾ßÇÔ
-																	   // ±×·¡¼­ ÀÏ´Ü ¼Óµµ°¡ µ¿ÀÏÇÏ´Ù°í °¡Á¤
+	uniform_int_distribution<clock_t> dis_update_interval(500, 500); // ë‹¨ì–´ ì—…ë°ì´íŠ¸ ì‹œê°„ ê°„ê²©ì„ ëœë¤ìœ¼ë¡œ ì •í•œë‹¤.
+																	   // ê·¸ëŸ¬ë‚˜ ê° ë‹¨ì–´ì˜ ì†ë„ê°€ ë‹¤ë¥´ë©´ ë‹¨ì–´ê°€ ê²¹ì¹˜ëŠ” ë¬¸ì œê°€ ìƒê¸°ê³ 
+																	   // ë‚˜ì¤‘ì— ë§Œë“¤ì–´ì¡Œë˜ ê°™ì€ ì´ë¦„ì˜ ë‹¨ì–´ê°€ ë¨¼ì € ë§Œë“¤ì–´ì§€ëŠ” ê°™ì€ ì´ë¦„ì˜
+																	   // ë‹¨ì–´ë“¤ì„ ì¶”ì›” í–ˆì„ ë•Œ ë” ë°‘ì— ìˆëŠ” ë‹¨ì–´ ì—†ì• ë„ë¡ êµ¬í˜„í•´ì•¼í•¨
+																	   // ê·¸ë˜ì„œ ì¼ë‹¨ ì†ë„ê°€ ë™ì¼í•˜ë‹¤ê³  ê°€ì •
 	clock_t selected_interval = dis_update_interval(gen);
+
+	uniform_int_distribution<int> dis_color(0, 99); //ìƒ‰ìƒì„ ì •í•˜ê¸° ìœ„í•œ ëœë¤
+	int temp_color_prob = dis_color(gen);
+	Color temp_color = WHITE;
+	if (temp_color_prob < 10) temp_color = BLUE; //íŒŒë€ìƒ‰ê¸€ìëŠ” ë§ì¶”ë©´ ì ìˆ˜ 3ì ì¤Œ
+	else if (temp_color_prob < 20) temp_color = RED; //ë¶‰ì€ ê¸€ìëŠ” í‹€ë¦¬ë©´ life 2ì ê¹ì„
+
 	
-	falling_word_list.push_back(Word(selected_word, selected_x, 1, 1, selected_interval));
+	falling_word_list.push_back(Word(selected_word, selected_x, 1, 1, selected_interval,temp_color));
 
 }

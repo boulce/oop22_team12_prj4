@@ -1,10 +1,8 @@
-﻿#include "gClass.h";
-#include <iostream>
-#include <windows.h>
-#include <conio.h>
+#include "gClass.h"
 
-void gotoXY(int x, int y);
-void setColor(int color);
+
+
+
 
 UI::UI() {
 
@@ -15,7 +13,7 @@ UI::UI() {
 
 	window_title = "OOP22 TEAM12 PROJECT4";
 	window_width = 100;
-	window_height = 30;
+	window_height = 40;
 
 	temp = "title " + window_title;
 	system(temp.c_str()); // 제목 설정
@@ -133,9 +131,16 @@ void UI::keyboardEvent(vector<Word>& falling_word_list) {
 			if (typing_str.size()) {	
 				for (vector<Word>::iterator it = falling_word_list.begin(); it != falling_word_list.end(); it++) {
 					if (it->get_name() == typing_str) { // 일치하는 글자가 있으면 지운다.
+						if (it->get_color() == BLUE) { //벡터에서 지우기 전에 색에 따라 score추가 다르게 구현
+							score += 3;
+						}
+
+						else score++;
 						it->Word_Erase(main_box_x, main_box_y);
 						falling_word_list.erase(it);
-						score++;//조건 달성시 점수 추가
+
+						
+
 						gotoXY(main_box_x + typing_box_x + 2, main_box_y + typing_box_y + 1);
 						for (int i = 0; i < typing_str.size(); i++) cout << " "; // Typing_Box 안의 글자 비움
 
@@ -148,8 +153,8 @@ void UI::keyboardEvent(vector<Word>& falling_word_list) {
 	}
 }
 
-void UI::down_life()
+void UI::down_life(int num)
 {
-	life--;
+	life-=num;
 
 }
