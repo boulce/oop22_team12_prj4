@@ -10,7 +10,7 @@
 using namespace std;
 
 /*
-   ìƒ‰ê¹” ê°’, cursor_function::setColor(int color) í•¨ìˆ˜ì˜ ì¸ìë¡œ ì‚¬ìš©ëœë‹¤.
+   »ö±ò °ª, cursor_function::setColor(int color) ÇÔ¼öÀÇ ÀÎÀÚ·Î »ç¿ëµÈ´Ù.
 */
 
 
@@ -64,9 +64,9 @@ private:
 	int x;
 	int y;
 	int speed;
-	clock_t last_update_time; // ë‹¨ì–´ê°€ ë§ˆì§€ë§‰ìœ¼ë¡œ ì—…ë°ì´íŠ¸ëœ ì‹œê°
-	clock_t update_time_interval; // ë‹¨ì–´ ì—…ë°ì´íŠ¸ëœ ì‹œê°„ ê°„ê²©
-	Color word_color; //ë‹¨ì–´ì˜ ìƒ‰
+	clock_t last_update_time; // ´Ü¾î°¡ ¸¶Áö¸·À¸·Î ¾÷µ¥ÀÌÆ®µÈ ½Ã°¢
+	clock_t update_time_interval; // ´Ü¾î ¾÷µ¥ÀÌÆ®µÈ ½Ã°£ °£°İ
+	Color word_color; //´Ü¾îÀÇ »ö
 };
 
 class WordManager {
@@ -79,7 +79,7 @@ public:
 
 	void set_last_word_birth_time(clock_t t) { last_word_birth_time = t; }
 	void set_birth_time_interval(clock_t t) { birth_time_interval = t; }
-	void add_falling_word(int main_box_width); // ì´ ë©”ì†Œë“œë¥¼ ì‹¤í–‰í•˜ë©´ ëœë¤ë‹¨ì–´ í•˜ë‚˜ë§Œ ê°€ì ¸ì™€ì„œ falling_word_listì— ì¶”ê°€ë¨
+	void add_falling_word(int main_box_width); // ÀÌ ¸Ş¼Òµå¸¦ ½ÇÇàÇÏ¸é ·£´ı´Ü¾î ÇÏ³ª¸¸ °¡Á®¿Í¼­ falling_word_list¿¡ Ãß°¡µÊ
 
 
 private:
@@ -87,8 +87,8 @@ private:
 	vector<Word> falling_word_list;
 	int total_word_cnt;
 
-	clock_t last_word_birth_time; // ë‹¨ì–´ê°€ ë§ˆì§€ë§‰ìœ¼ë¡œ ìƒì„±ëœ ì‹œê°
-	clock_t birth_time_interval; // ë‹¨ì–´ ìƒì„± ì‹œê°„ ê°„ê²©
+	clock_t last_word_birth_time; // ´Ü¾î°¡ ¸¶Áö¸·À¸·Î »ı¼ºµÈ ½Ã°¢
+	clock_t birth_time_interval; // ´Ü¾î »ı¼º ½Ã°£ °£°İ
 };
 
 class UI {
@@ -121,41 +121,41 @@ public:
 
 	void keyboardEvent(vector<Word>& falling_word_list);
 
-	void down_life(int num); //ë¼ì´í”„ë¥¼ ê¹ëŠ”ë‹¤. setterë³´ë‹¤ ì´ë ‡ê²Œ í•˜ëŠ”ê²Œ ë‚˜ì€ë“¯ ë§Œì•½ ì•„ì´í…œê°™ì€ê±¸ ì¶”ê°€í•´ì„œ íŠ¹ì • ë‹¨ì–´ ë§ì¶œì‹œ life 3ê°œ ì¶”ê°€ ì´ëŸ°ê±° í• ê±°ë©´ setterë¡œ ë°”ê¿”ì•¼ í• ë“¯
+	void down_life(int num); //¶óÀÌÇÁ¸¦ ±ğ´Â´Ù. setterº¸´Ù ÀÌ·¸°Ô ÇÏ´Â°Ô ³ªÀºµí ¸¸¾à ¾ÆÀÌÅÛ°°Àº°É Ãß°¡ÇØ¼­ Æ¯Á¤ ´Ü¾î ¸ÂÃâ½Ã life 3°³ Ãß°¡ ÀÌ·±°Å ÇÒ°Å¸é setter·Î ¹Ù²ã¾ß ÇÒµí
 
 private:
-	string window_title; // ì½˜ì†”ì°½ ì œëª©
-	int window_width; // ì½˜ì†”ì°½ ë„ˆë¹„
-	int window_height; // ì½˜ì†”ì°½ ë†’ì´
+	string window_title; // ÄÜ¼ÖÃ¢ Á¦¸ñ
+	int window_width; // ÄÜ¼ÖÃ¢ ³Êºñ
+	int window_height; // ÄÜ¼ÖÃ¢ ³ôÀÌ
 
-	int main_box_width; // ë©”ì¸ ê²Œì„ ê³µê°„ ë„ˆë¹„
-	int main_box_height; // ë©”ì¸ ê²Œì„ ê³µê°„ ë†’ì´
-	int main_box_x; // ë©”ì¸ ê²Œì„ ê³µê°„ ì™¼ìª½ì—ì„œ ì‹œì‘ Xì¢Œí‘œ
-	int main_box_y; // ë©”ì¸ ê²Œì„ ê³µê°„ ìœ„ìª½ì—ì„œ ì‹œì‘ Yì¢Œí‘œ
+	int main_box_width; // ¸ŞÀÎ °ÔÀÓ °ø°£ ³Êºñ
+	int main_box_height; // ¸ŞÀÎ °ÔÀÓ °ø°£ ³ôÀÌ
+	int main_box_x; // ¸ŞÀÎ °ÔÀÓ °ø°£ ¿ŞÂÊ¿¡¼­ ½ÃÀÛ XÁÂÇ¥
+	int main_box_y; // ¸ŞÀÎ °ÔÀÓ °ø°£ À§ÂÊ¿¡¼­ ½ÃÀÛ YÁÂÇ¥
 
-	int typing_box_width; // íƒ€ì´í•‘ ê³µê°„ ë„ˆë¹„
-	int typing_box_height; // íƒ€ì´í•‘ ê³µê°„ ë†’ì´
-	int typing_box_x; // íƒ€ì´í•‘ ê³µê°„ì˜ ë©”ì¸ ê²Œì„ ê³µê°„ ì™¼ìª½ì—ì„œ ì‹œì‘ Xì¢Œí‘œ
-	int typing_box_y; // íƒ€ì´í•‘ ê³µê°„ì˜ ë©”ì¸ ê²Œì„ ê³µê°„ ì•„ë˜ìª½ì—ì„œ ì‹œì‘ Yì¢Œí‘œ
+	int typing_box_width; // Å¸ÀÌÇÎ °ø°£ ³Êºñ
+	int typing_box_height; // Å¸ÀÌÇÎ °ø°£ ³ôÀÌ
+	int typing_box_x; // Å¸ÀÌÇÎ °ø°£ÀÇ ¸ŞÀÎ °ÔÀÓ °ø°£ ¿ŞÂÊ¿¡¼­ ½ÃÀÛ XÁÂÇ¥
+	int typing_box_y; // Å¸ÀÌÇÎ °ø°£ÀÇ ¸ŞÀÎ °ÔÀÓ °ø°£ ¾Æ·¡ÂÊ¿¡¼­ ½ÃÀÛ YÁÂÇ¥
 
-	int game_over_line_y; // ë‹¨ì–´ê°€ ë‹¿ìœ¼ë©´ ê²Œì„ì´ ëë‚˜ëŠ” yì¢Œí‘œ
+	int game_over_line_y; // ´Ü¾î°¡ ´êÀ¸¸é °ÔÀÓÀÌ ³¡³ª´Â yÁÂÇ¥
 
-	string typing_str; // í˜„ì¬ ì…ë ¥í•œ ë¬¸ìì—´
-	int score; //ì ìˆ˜í‘œì‹œìš©
-	int life; //ìƒëª… í‘œì‹œìš©
+	string typing_str; // ÇöÀç ÀÔ·ÂÇÑ ¹®ÀÚ¿­
+	int score; //Á¡¼öÇ¥½Ã¿ë
+	int life; //»ı¸í Ç¥½Ã¿ë
 };
 
 class GameManager {
 public:
-	void Init(); // ê²Œì„ ì‹œì‘ì‹œ ì´ˆê¸° ì •ë³´ ì„¤ì •
-	void Update(); // í”„ë ˆì„ë§ˆë‹¤ ì •ë³´ Update
-	void FPS(); // Frame Per Second ì¡°ì ˆ
-	int Score() { return ui.get_score(); }//ì ìˆ˜ë¥¼ UIì—ì„œ ê°€ì ¸ì˜´ scoreë¥¼ GameManagerì— ë„£ì§€ ì•ŠëŠ” ì´ìœ ëŠ” scoreë¥¼ +í•˜ëŠ” ì¡°ê±´ì´ UIì— ìˆê¸°ë•Œë¬¸, ê·¸ëƒ¥ ë„£ìœ¼ë©´ GameManagerì˜ publicì— getter/setterì„¤ì • í•„ìš”í• ë“¯ ê·¸ëŸ¬ë©´ ë”ëŸ¬ì›Œì§
-	int Life() { return ui.get_life(); } //ìƒëª…ì„ UIì—ì„œ ê°€ì ¸ì˜¨ë‹¤. lifeë¥¼ Scoreì²˜ëŸ¼ UIì— ë„£ëŠ” ì´ìœ ëŠ” scoreì™€ lifeëŠ” ìœ ì‚¬í•œë° ë‹¤ë¥¸ í´ë˜ìŠ¤ì— ìˆìœ¼ë©´ ì–´ìƒ‰í•˜ê¸° ë•Œë¬¸, 
-	void is_exit(); //í”„ë¡œê·¸ë¨ ì¢…ë£Œ íŒì •
+	void Init(); // °ÔÀÓ ½ÃÀÛ½Ã ÃÊ±â Á¤º¸ ¼³Á¤
+	void Update(); // ÇÁ·¹ÀÓ¸¶´Ù Á¤º¸ Update
+	void FPS(); // Frame Per Second Á¶Àı
+	int Score() { return ui.get_score(); }//Á¡¼ö¸¦ UI¿¡¼­ °¡Á®¿È score¸¦ GameManager¿¡ ³ÖÁö ¾Ê´Â ÀÌÀ¯´Â score¸¦ +ÇÏ´Â Á¶°ÇÀÌ UI¿¡ ÀÖ±â¶§¹®, ±×³É ³ÖÀ¸¸é GameManagerÀÇ public¿¡ getter/setter¼³Á¤ ÇÊ¿äÇÒµí ±×·¯¸é ´õ·¯¿öÁü
+	int Life() { return ui.get_life(); } //»ı¸íÀ» UI¿¡¼­ °¡Á®¿Â´Ù. life¸¦ ScoreÃ³·³ UI¿¡ ³Ö´Â ÀÌÀ¯´Â score¿Í life´Â À¯»çÇÑµ¥ ´Ù¸¥ Å¬·¡½º¿¡ ÀÖÀ¸¸é ¾î»öÇÏ±â ¶§¹®, 
+	void is_exit(); //ÇÁ·Î±×·¥ Á¾·á ÆÇÁ¤
 private:
 	UI ui;
 	WordManager word_manager;
-	clock_t system_time; // ê²Œì„ ì‹œì‘í•˜ê³  ê²½ê³¼ëœ ì‹œê°„
+	clock_t system_time; // °ÔÀÓ ½ÃÀÛÇÏ°í °æ°úµÈ ½Ã°£
 	
 };
