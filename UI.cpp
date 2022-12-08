@@ -1,9 +1,5 @@
 ﻿#include "gClass.h"
 
-
-
-
-
 UI::UI() {
 
 	/*
@@ -157,4 +153,16 @@ void UI::down_life(int num)
 {
 	life-=num;
 
+}
+
+void UI::Draw_Score() {
+	gotoXY(3, 26);
+	cout << "score: " << score;
+}
+
+void UI::Draw_Life() {
+	gotoXY(15, 26);
+	setColor(RED);
+	cout << "Life: " <<life;
+	setColor(WHITE);
 }

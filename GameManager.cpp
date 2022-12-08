@@ -14,6 +14,8 @@ void GameManager::Init() {
 
 
 void GameManager::Update() {
+	ui.Draw_Score();
+	ui.Draw_Life();
 	vector<Word>& falling_word_list = word_manager.get_falling_word_list();
 	system_time = clock(); // 시스템 시간 갱신
 

@@ -102,22 +102,11 @@ public:
 	int get_score() { return score; }
 	int get_life() { return life; }
 	
-
-
-	//void set_main_box_width(int w) { main_box_width = w; }
-	//void set_main_box_height(int h) { main_box_height = h; }
-	//void set_main_box_x(int x) { main_box_x = x; }
-	//void set_main_box_y(int y) { main_box_y = y; }
-
-	//int get_typing_box_width() { return typing_box_width; }
-
-	//void set_typing_box_width(int w) { typing_box_width = w; }
-	//void set_typing_box_height(int h) { typing_box_height = h; }
-	//void set_typing_box_x(int x) { typing_box_x = x; }
-	//void set_typing_box_y(int y) { typing_box_y = y; }
-
 	void Draw_Main_Box();
 	void Draw_Typing_Box();
+
+	void Draw_Score();
+	void Draw_Life();
 
 	void keyboardEvent(vector<Word>& falling_word_list);
 
@@ -150,8 +139,6 @@ public:
 	void Init(); // 게임 시작시 초기 정보 설정
 	void Update(); // 프레임마다 정보 Update
 	void FPS(); // Frame Per Second 조절
-	int Score() { return ui.get_score(); }//점수를 UI에서 가져옴 score를 GameManager에 넣지 않는 이유는 score를 +하는 조건이 UI에 있기때문, 그냥 넣으면 GameManager의 public에 getter/setter설정 필요할듯 그러면 더러워짐
-	int Life() { return ui.get_life(); } //생명을 UI에서 가져온다. life를 Score처럼 UI에 넣는 이유는 score와 life는 유사한데 다른 클래스에 있으면 어색하기 때문, 
 	void is_exit(); //프로그램 종료 판정
 private:
 	UI ui;
