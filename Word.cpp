@@ -1,20 +1,26 @@
 #include "gClass.h"
-#include <iostream>
+
 void gotoXY(int x, int y);
 
-Word::Word(string name, int x, int y, int s, clock_t update_time_interval) {
+Word::Word(string name, int x, int y, int s, clock_t update_time_interval,Color word_color) {
 	this->name = name;
 	this->x = x;
 	this->y = y;
 	speed = s;
 
 	this->update_time_interval = update_time_interval;
-	last_update_time = clock(); // ´Ü¾î°¡ Ã³À½ »ı¼ºµÆÀ» ¶§ ½Ã°£À» ÀúÀåÇÑ´Ù
+
+	
+	this->word_color = word_color;
+	
+	last_update_time = clock(); // ë‹¨ì–´ê°€ ì²˜ìŒ ìƒì„±ëì„ ë•Œ ì‹œê°„ì„ ì €ì¥í•œë‹¤
 }
 
 void Word::Word_Draw(int main_box_x, int main_box_y) {
 	gotoXY(main_box_x + x, main_box_y + y);
+	setColor(word_color);
 	cout << name;
+	setColor(WHITE);
 }
 
 void Word::Word_Erase(int main_box_x, int main_box_y) {

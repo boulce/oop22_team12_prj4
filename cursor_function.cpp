@@ -1,12 +1,13 @@
+ï»¿#include "gClass.h"
 #include <windows.h>
 
-void gotoXY(int x, int y) // Ä¿¼­ À§Ä¡ ÀÌµ¿
+void gotoXY(int x, int y) // ì»¤ì„œ ìœ„ì¹˜ ì´ë™
 {
     COORD pos = { x ,y };
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-void setColor(int color) // »ö±ò ¼³Á¤
+void setColor(int color) // ìƒ‰ê¹” ì„¤ì •
 {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
