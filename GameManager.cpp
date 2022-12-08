@@ -1,4 +1,4 @@
-#include "gClass.h"
+﻿#include "gClass.h"
 
 
 void GameManager::Init() {
