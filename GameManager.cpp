@@ -8,14 +8,13 @@ void GameManager::Init() {
 
 
 	falling_word_list[0].Word_Draw(ui.get_main_box_x(), ui.get_main_box_y()); // 처음 생성된 단어 그리기
-	
-	
+
+	ui.Draw_Score();
+	ui.Draw_Life();
 }
 
 
 void GameManager::Update() {
-	ui.Draw_Score();
-	ui.Draw_Life();
 	vector<Word>& falling_word_list = word_manager.get_falling_word_list();
 	system_time = clock(); // 시스템 시간 갱신
 
@@ -26,7 +25,6 @@ void GameManager::Update() {
 			falling_word_list[i].Word_Erase(ui.get_main_box_x(), ui.get_main_box_y());
 			// 단어가 게임 오버 라인에 닿으면 사라진다
 			if (falling_word_list[i].get_y() >= ui.get_game_over_line_y()) {
-
 				if (falling_word_list[i].get_color() == RED) { //붉은단어가 내려온거면 2점을 깎는다.
 					ui.down_life(2);
 				}
@@ -36,7 +34,7 @@ void GameManager::Update() {
 
 				falling_word_list.erase(falling_word_list.begin() + i);
 				i--;
-				
+				ui.Draw_Life();
 				continue;
 			}
 			falling_word_list[i].set_y(falling_word_list[i].get_y() + falling_word_list[i].get_speed());
@@ -70,12 +68,9 @@ void GameManager::FPS()
 void GameManager::is_exit()
 {
 	if (ui.get_life() <= 0) {
-		gotoXY(15, 30);
-		cout << "\n\n\n\n 게임 종료\n";
+		gotoXY(ui.get_main_box_x() + ui.get_main_box_width()/2, ui.get_main_box_y() + ui.get_main_box_height());
+		cout << "게임 종료";
 		exit(0);
-
-
-
 	}
 }
 

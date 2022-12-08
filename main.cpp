@@ -1,6 +1,5 @@
 ﻿#include "gClass.h"
 
-
 void gotoXY(int x, int y);
 
 int main() {
@@ -31,7 +30,7 @@ int main() {
 			tempold = clock();
 			FrameCnt = 0;
 		}
-		gManager.is_exit(); //Life가 0이되는 순간이 gManager.Update인데 Life가 0인걸 위에서 표시하고 exit에 대한 체크를 해야함.
+		gManager.is_exit(); // 게임 종료조건 판단
 		gManager.FPS(); // Frame Per Second 조절
 		gManager.Update();
 		

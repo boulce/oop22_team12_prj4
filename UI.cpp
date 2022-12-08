@@ -9,7 +9,7 @@ UI::UI() {
 
 	window_title = "OOP22 TEAM12 PROJECT4";
 	window_width = 100;
-	window_height = 40;
+	window_height = 30;
 
 	temp = "title " + window_title;
 	system(temp.c_str()); // 제목 설정
@@ -141,6 +141,7 @@ void UI::keyboardEvent(vector<Word>& falling_word_list) {
 						for (int i = 0; i < typing_str.size(); i++) cout << " "; // Typing_Box 안의 글자 비움
 
 						typing_str.clear();
+						Draw_Score();
 						break;
 					}
 				}
@@ -156,12 +157,12 @@ void UI::down_life(int num)
 }
 
 void UI::Draw_Score() {
-	gotoXY(3, 26);
+	gotoXY(3, main_box_y + main_box_height);
 	cout << "score: " << score;
 }
 
 void UI::Draw_Life() {
-	gotoXY(15, 26);
+	gotoXY(15, main_box_y + main_box_height);
 	setColor(RED);
 	cout << "Life: " <<life;
 	setColor(WHITE);

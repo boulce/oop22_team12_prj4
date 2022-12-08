@@ -96,6 +96,7 @@ public:
 	UI();
 
 	int get_main_box_width() { return main_box_width; }
+	int get_main_box_height() { return main_box_height; }
 	int get_main_box_x() { return main_box_x; }
 	int get_main_box_y() { return main_box_y; }
 	int get_game_over_line_y() { return game_over_line_y; }
